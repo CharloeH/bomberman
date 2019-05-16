@@ -1,4 +1,4 @@
-﻿/* Sebastian Horton
+/* Sebastian Horton
  * Friday May 17th, 2019
  * A class that creates, arms and detonates bombs.
  * */
@@ -24,7 +24,7 @@ namespace BomberMan_2._0
     class Bomb
     {
         public bool bombPlaced; //true if a bomb is currently placed but hasnt exploded, (else false).
-        
+
         static Point bombPos;
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace BomberMan_2._0
         /// </summary>
         public Point armBomb()
         {
-            
+
             //MessageBox.Show(bombPos.ToString());
             Matrices.bomb[(int)bombPos.X, (int)bombPos.Y] = 1;
-            Map.colourMap();
+            Map.colourMap(-2);
 
             return bombPos;
         }
@@ -100,16 +100,13 @@ namespace BomberMan_2._0
         /// </summary>
         public bool resetBomb()
         {
-            
-                Matrices.updateBlocks();
-                Matrices.updateWalkable();
-                Map.colourMap();
+
+            Matrices.updateBlocks();
+            Matrices.updateWalkable();
+            Map.colourMap(-2);
             Matrices.removeBombs();
             return true;
         }
 
     }
 }
-
-    
-

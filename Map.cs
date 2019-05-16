@@ -1,4 +1,4 @@
-﻿/*Sebastian Horton, Elliot McArthur
+/*Sebastian Horton, Elliot McArthur, Ethan Shipston
  * Friday May 17th, 2019
  * A class that draws a grid of rectangles based on a set of matrices.
  * */
@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace BomberMan_2._0
 {
-  
+
     class Map
     {
         /// <summary>
@@ -45,44 +46,63 @@ namespace BomberMan_2._0
 
                 }
             }
-            colourMap();
+            colourMap(-2);
         }
 
         /// <summary>
         /// Authors
-        /// Sebastian Horton, Elliott McArthur
+        /// Sebastian Horton, Elliott McArthur, Ethan Shipston
         /// updates the map colours based on the position of the blocks, pillars and walkable space.
         /// </summary>
-        public static void colourMap()
+        public static void colourMap(int i)
         {
-            /*Ethan change these to be the sprites you created*/
+            ImageBrush bombBrush = new ImageBrush(new BitmapImage(new Uri("Sprites/Bomb4.png", UriKind.Relative)));
+            if (i != -2)
+            {
+                if (i == 3)
+                {
+                    bombBrush = new ImageBrush(new BitmapImage(new Uri("Sprites/Bomb4.png", UriKind.Relative)));
+                }
+                if (i == 2)
+                {
+                    bombBrush = new ImageBrush(new BitmapImage(new Uri("Sprites/Bomb3.png", UriKind.Relative)));
+                }
+                if (i == 1)
+                {
+                    bombBrush = new ImageBrush(new BitmapImage(new Uri("Sprites/Bomb2.png", UriKind.Relative)));
+                }
+                if (i == 0)
+                {
+                    bombBrush = new ImageBrush(new BitmapImage(new Uri("Sprites/Bomb1.png", UriKind.Relative)));
+                }
+            }
             for (int x = 0; x < 9; x++)
             {
                 for (int y = 0; y < 15; y++)
                 {
                     if (Matrices.pillars[y, x] == 1)
                     {
-                        Matrices.map[y, x].Fill = Brushes.Red; 
+                        Matrices.map[y, x].Fill = new ImageBrush(new BitmapImage(new Uri("Sprites/Solid Wall.png", UriKind.Relative)));
                     }
-                    else if (Matrices.blocks[y, x] == 1 )
+                    else if (Matrices.blocks[y, x] == 1)
                     {
-                        if(Matrices.bomb[y,x] == 1)
+                        if (Matrices.bomb[y, x] == 1)
                         {
-                            Matrices.map[y, x].Fill = Brushes.Green;
+                            Matrices.map[y, x].Fill = bombBrush;
                         }
                         else
-                            Matrices.map[y, x].Fill = Brushes.Yellow;
+                            Matrices.map[y, x].Fill = new ImageBrush(new BitmapImage(new Uri("Sprites/Soft Wall.png", UriKind.Relative)));
                     }
                     else if (Matrices.walkable[y, x] == 1)
                     {
-                        if(Matrices.bomb[y,x] == 1)
+                        if (Matrices.bomb[y, x] == 1)
                         {
-                            Matrices.map[y, x].Fill = Brushes.Green;
+                            Matrices.map[y, x].Fill = bombBrush;
                         }
                         else
-                        Matrices.map[y, x].Fill = Brushes.Blue;
+                            Matrices.map[y, x].Fill = new ImageBrush(new BitmapImage(new Uri("Sprites/Floor.png", UriKind.Relative)));
                     }
-                    
+
                 }
             }
         }
@@ -98,7 +118,7 @@ namespace BomberMan_2._0
             {
                 for (int y = 0; y < 15; y++)
                 {
-                    if (Matrices.bomb[y, x] == 1 && Matrices.pillars[y,x] == 0)
+                    if (Matrices.bomb[y, x] == 1 && Matrices.pillars[y, x] == 0)
                     {
                         Matrices.map[y, x].Fill = Brushes.Green;
                     }

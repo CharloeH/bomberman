@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +16,11 @@ using System.Windows.Threading;
 
 namespace BomberMan_2._0
 {
-   
+
     class Menu
     {
         public static string playerNumber;
-         Canvas c;
+        Canvas c;
         Canvas cControls;
         Canvas cMainMenu;
         Canvas cGameOverMenu;
@@ -31,20 +31,20 @@ namespace BomberMan_2._0
             cMainMenu = new Canvas();
             cGameOverMenu = new Canvas();
             createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, "Bomberman");
-            
+
         }
-            private void addWPFObject(dynamic item, int xPos, int yPos, int width, Brush colour, string content, Canvas sp)
-            {
-                item.Width = width;
+        private void addWPFObject(dynamic item, int xPos, int yPos, int width, Brush colour, string content, Canvas sp)
+        {
+            item.Width = width;
 
-                item.Background = colour;
-                item.Text = content;
-                item.FontSize = 35;
+            item.Background = colour;
+            item.Text = content;
+            item.FontSize = 35;
 
-                Canvas.SetTop(item, yPos);
-                Canvas.SetLeft(item, xPos);
-                sp.Children.Add(item);
-            }
+            Canvas.SetTop(item, yPos);
+            Canvas.SetLeft(item, xPos);
+            sp.Children.Add(item);
+        }
         private void addButton(Button btn, int xPos, int yPos, int width, int Height, int fontSize, Brush colour, string content, RoutedEventHandler btn_Click, Canvas c)
         {
             btn.Click += btn_Click;
@@ -59,7 +59,7 @@ namespace BomberMan_2._0
             Canvas.SetLeft(btn, xPos);
             c.Children.Add(btn);
         }
-         
+
         public void createMainMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, string title)
         {
             removeAll();
@@ -76,11 +76,11 @@ namespace BomberMan_2._0
         public void createControlsMenu(RoutedEventHandler btnBack_Click)
         {
             removeAll();
-           
+
 
             TextBlock txtPlayer1 = new TextBlock();
             addWPFObject(txtPlayer1, 170, 50, 250, Brushes.LightGray, "Player 1", cControls);
-           
+
 
             TextBlock txtUpHeader1 = new TextBlock();
             addWPFObject(txtUpHeader1, 170, 150, 90, Brushes.Red, "Up", cControls);
@@ -152,7 +152,7 @@ namespace BomberMan_2._0
             else
                 c.Background = Brushes.Blue;
 
-            
+
         }
         public static void quitGame(MainWindow window)
         {
@@ -160,7 +160,7 @@ namespace BomberMan_2._0
         }
         public void EndGame(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, DispatcherTimer timer, Canvas cGame)
         {
-           if(MainWindow.gamestate == MainWindow.GameState.gameOver)
+            if (MainWindow.gamestate == MainWindow.GameState.gameOver)
             {
                 timer.Stop();
                 removeAll();
@@ -177,4 +177,3 @@ namespace BomberMan_2._0
         }
     }
 }
-

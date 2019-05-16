@@ -1,4 +1,4 @@
-﻿/* Sebastian Horton, Ethan Shipston, Logan Ellis, Elliot McArthur
+/* Sebastian Horton, Ethan Shipston, Logan Ellis, Elliot McArthur
  * Friday May 17th, 2019
  * The video game Bomberman recreated in C#
  **/
@@ -28,44 +28,56 @@ namespace BomberMan_2._0
         /*Ethan add appropriate music*/
 
         //public objects:
-
-        Map map;
-
-        Player player1;
-        Point player1Point;
-       
-        Player player2;
-        Point player2Point;
-        
+        Game game;
+        Canvas cGame;
+        Menu menu;
+        public enum GameState { startMenu, optionsMenu, gameOn, gameOver }
+        public static GameState gamestate;
+        public static int playerNumber;
         DispatcherTimer gameTimer;
-       
+
         public MainWindow()
         {
             InitializeComponent();
-
-            map = new Map(canvas); //construct map.
-
-            player1Point = new Point(0, 0);
-            player1 = new Player(canvas, Brushes.DarkRed, player1Point, 1);  //construct player1 in top left corner
-
-            player2Point = new Point(896, 512); 
-            player2 = new Player(canvas, Brushes.DarkBlue, player2Point, 2); //construct player2 in bottom right corner
-
+            menu = new Menu(canvas, BtnPlay_Click, BtnControls_Click, BtnQuit_Click);
+            cGame = new Canvas();
 
             gameTimer = new DispatcherTimer();
             gameTimer.Tick += gameTimer_Tick;
-            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 30); //30 frames(ticks)/second
-            gameTimer.Start();
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 15); //30 frames(ticks)/second
 
         }
 
+        /// <summary>
+        /// Authors
+        /// Ethan Shipston
+        /// each player uses a set of keys to move in 4 directions and place a bomb. 
+        /// Ethan set it so the player can change their controls (a menu with textboxes that contain default values
+        /// </summary>
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            //each player uses a set of keys to move in 4 directions and place a bomb. 
-            /*Ethan set it so the player can change their controls (a menu with textboxes that contain default values)*/
-            player1.updatePlayer(Key.W, Key.S, Key.A, Key.D, Key.LeftShift); 
-            player2.updatePlayer(Key.Up, Key.Down, Key.Left, Key.Right, Key.RightCtrl);
-            
+            game.updateGame();
+            menu.EndGame(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, gameTimer, cGame, playerNumber);
+        }
+
+        private void BtnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            menu.removeAll();
+            game = new Game(cGame);
+            canvas.Children.Add(cGame);
+            gameTimer.Start();
+        }
+        private void BtnControls_Click(object sender, RoutedEventArgs e)
+        {
+            menu.createControlsMenu(BtnBack_Click);
+        }
+        private void BtnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            menu.createMainMenu(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, "Bomberman");
         }
     }
 }

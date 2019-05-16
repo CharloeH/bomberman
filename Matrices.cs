@@ -1,4 +1,4 @@
-﻿/* Sebastian Horton
+/* Sebastian Horton
  * Friday May 17th, 2019
  * A class that creates matrices and uses logic to mech and update them.
  * */
@@ -83,7 +83,7 @@ namespace BomberMan_2._0
                 for (int y = 0; y < 15; y++)
                 {
 
-                    if (pillars[y, x] == 0 && blocks[y, x] == 0 && walkable[y,x] != 1) 
+                    if (pillars[y, x] == 0 && blocks[y, x] == 0 && walkable[y, x] != 1)
                     {
                         walkable[y, x] = 1;
                     }
@@ -103,7 +103,7 @@ namespace BomberMan_2._0
         /// </summary>
         public static int[,] updateBlocks()
         {
-            
+
             for (int x = 0; x < 9; x++)
             {
                 for (int y = 0; y < 15; y++)
